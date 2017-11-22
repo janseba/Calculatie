@@ -9,31 +9,31 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
 Private Sub Workbook_SheetActivate(ByVal sh As Object)
 
-If LCase(sh.Name) = "voorblad" Then
-sh.EnableCalculation = True
-Else
-Sheets("voorblad").EnableCalculation = False
-End If
-
-If (InStr(1, sh.Name, GetWorksheetFromCodeName(sh.Name), vbTextCompare) > 0 Or LCase(sh.Name = "voorblad")) And Range("menu").Value = True Then
-
-Application.CellDragAndDrop = False
-Else
-With Application
-.CommandBars("List Range Popup").Enabled = True
-.CommandBars("Cell").Enabled = True
-With .CommandBars("Column")
-.Enabled = True
-.Reset
-End With
-With .CommandBars("Row")
-.Enabled = True
-.Reset
-End With
-
-Application.CellDragAndDrop = True
-End With
-End If
+'If LCase(sh.Name) = "voorblad" Then
+'sh.EnableCalculation = True
+'Else
+'Sheets("voorblad").EnableCalculation = False
+'End If
+'
+'If (InStr(1, sh.Name, GetWorksheetFromCodeName(sh.Name), vbTextCompare) > 0 Or LCase(sh.Name) = "voorblad") And Range("menu").Value = True Then
+'
+'Application.CellDragAndDrop = False
+'Else
+'With Application
+'.CommandBars("List Range Popup").Enabled = True
+'.CommandBars("Cell").Enabled = True
+'With .CommandBars("Column")
+'.Enabled = True
+'.Reset
+'End With
+'With .CommandBars("Row")
+'.Enabled = True
+'.Reset
+'End With
+'
+'Application.CellDragAndDrop = True
+'End With
+'End If
 End Sub
 
 Private Sub Workbook_SheetBeforeRightClick(ByVal sh As Object, ByVal Target As Range, Cancel As Boolean)

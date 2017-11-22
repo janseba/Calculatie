@@ -237,3 +237,34 @@ End If
 Next li
 Application.Calculation = xlCalculationAutomatic
 End Sub
+'---------------------------------------------------------------------------------------
+' Procedure : ExportCode
+' Author    : Bas Jansen
+' Date      : 22-11-2017
+' Purpose   : Export all code to folder (to enable version control via Github)
+'---------------------------------------------------------------------------------------
+'
+Public Sub ExportCode()
+
+    Dim wkbTarget As Excel.Workbook, clsCleaner As VBACodeCleaner.CodeCleaner
+    Const EXPORTFOLDER As String = "\\Mac\Dropbox for Business\InfoAction Team Folder\E\engie\Calculatie"
+
+    On Error GoTo ErrorHandler
+
+    ''' Create an instance of the CodeCleaner object.
+    Set clsCleaner = New VBACodeCleaner.CodeCleaner
+
+    ''' Get a reference to the workbook we'll operate on.
+    Set wkbTarget = ThisWorkbook
+
+    If Not clsCleaner.ExportModules(wkbTarget, EXPORTFOLDER) Then
+        Err.Raise vbObjectError, , clsCleaner.GetLastError
+    End If
+    
+    Exit Sub
+
+ErrorHandler:
+
+    MsgBox Err.Description, vbCritical, "Code Cleaner Demo"
+
+End Sub

@@ -17,30 +17,18 @@ Attribute VB_Exposed = False
 
 Private Sub LB_gevonden_artikelen_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-Dim i As Long
-Dim Msg As String
- With LB_gevonden_artikelen
-    If .ListIndex <> -1 Then
-        artikelomschrijving = .Column(0)
-        artikelnummer = .Column(1)
-        prijs = .Column(2)
-        werkpost = .Column(3)
-    End If
-End With
-    
+    With LB_gevonden_artikelen
+        If .ListIndex <> -1 Then
+            artikelnummer = .Column(1)
+        End If
+    End With
+
     With ActiveSheet
-If InStr(1, LCase(.Name), "calculatie", 0) Then
-
-.Cells(ActiveCell.Row, 3).Value = artikelnummer
-.Cells(ActiveCell.Row, 4).Value = artikelomschrijving
-.Cells(ActiveCell.Row, 6).Value = prijs
-'If werkpost <> "" Then
-'.Cells(ActiveCell.Row, 8).Value = werkpost
-'End If
-End If
-End With
-
-'End If
+        If InStr(1, LCase(.Name), "calculatie", 0) Then
+            .Cells(ActiveCell.Row, 3).Value = artikelnummer
+        End If
+    End With
+    
 End Sub
 
 Private Sub TXT_omschrijving_Change()

@@ -56,7 +56,7 @@ End If
    
 End Sub
 
-Function GetWorksheetFromCodeName(CodeName As String)
+Function GetWorksheetFromCodeName(CodeName As String) As String
     Application.Volatile
     Dim WS As Worksheet
     For Each WS In ThisWorkbook.Worksheets
