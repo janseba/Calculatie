@@ -26,8 +26,8 @@ Dim Msg As String
 End With
     
 'If LCase(ActiveSheet.Name) = "calculatie" Then
-If InStr(1, ActiveSheet.Name, "calculatie", vbTextCompare) > 0 Then
-Cells(ActiveCell.Row, 7).Value = werkpost
+If InStr(1, ActiveSheet.name, "calculatie", vbTextCompare) > 0 Then
+Cells(ActiveCell.row, 7).Value = werkpost
 'End With
 End If
 Unload Me

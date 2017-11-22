@@ -37,9 +37,9 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
 
     instellingen_ophalen
 
-    With Application.CommandBars.Add(Name:=Mname, Position:=msoBarPopup, _
+    With Application.CommandBars.Add(name:=Mname, Position:=msoBarPopup, _
         MenuBar:=False, Temporary:=True)
-        Select Case LCase(ActiveSheet.Name)
+        Select Case LCase(ActiveSheet.name)
 
             Case "voorblad"
 
@@ -53,7 +53,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
                             With .Controls.Add(Type:=msoControlButton)
                                 naam = IIf(Sheets("voorblad").Cells(b, k + 1).Value = "", "Calculatie " & Sheets("voorblad").Cells(b, k + 2).Value, Sheets("voorblad").Cells(b, k + 1).Value)
                                 .Caption = naam
-                                .OnAction = "'" & ThisWorkbook.Name & "'!'calculatie_tonen """ & naam & """'"
+                                .OnAction = "'" & ThisWorkbook.name & "'!'calculatie_tonen """ & naam & """'"
                             End With
                         End If
                     Next b
@@ -75,7 +75,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
                 If LCase(Cells(21, ActiveCell.Column).Value) = "artikelnr" Then
                     With .Controls.Add(Type:=msoControlButton)
                         .Caption = "&Artikel zoeken"
-                        .OnAction = "'" & ThisWorkbook.Name & "'!" & "artikelen_zoeken"
+                        .OnAction = "'" & ThisWorkbook.name & "'!" & "artikelen_zoeken"
                     End With
                 End If
 
@@ -88,7 +88,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
 
                 With .Controls.Add(Type:=msoControlButton)
                     .Caption = "Selectie &kopiëren"
-                    .OnAction = "'" & ThisWorkbook.Name & "'!" & "kopieren"
+                    .OnAction = "'" & ThisWorkbook.name & "'!" & "kopieren"
                     .BeginGroup = True
                 End With
 
@@ -114,17 +114,17 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
                 'Stop
                 Dim olo
                 Set olo = ActiveCell.ListObject
-                If InStr(1, olo.Name, "wtb_var", vbTextCompare) > 0 Then
+                If InStr(1, olo.name, "wtb_var", vbTextCompare) > 0 Then
                     With .Controls.Add(Type:=msoControlButton)
                         .Caption = "Subgroep kopiëren"
-                        .OnAction = "'" & ThisWorkbook.Name & "'!" & "subgroep_kopieren"
+                        .OnAction = "'" & ThisWorkbook.name & "'!" & "subgroep_kopieren"
                         .BeginGroup = True
                     End With
                 End If
                 If ActiveCell.Locked = False Then
                     With .Controls.Add(Type:=msoControlButton)
                         .Caption = "&Plakken als waarde"
-                        .OnAction = "'" & ThisWorkbook.Name & "'!" & "plakken"
+                        .OnAction = "'" & ThisWorkbook.name & "'!" & "plakken"
                     End With
 
                     '                Set MenuItem = .Controls.Add(Type:=msoControlPopup)
@@ -132,13 +132,13 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
                     '                  .Caption = "Subgroep rijen"
                     With .Controls.Add(Type:=msoControlButton)
                         .Caption = "Rij(en) &toevoegen"
-                        .OnAction = "'" & ThisWorkbook.Name & "'!" & "rijen_invoegen"
+                        .OnAction = "'" & ThisWorkbook.name & "'!" & "rijen_invoegen"
                         .BeginGroup = True
                     End With 'With .Controls.Add(Type:=msoControlButton)
 
                     With .Controls.Add(Type:=msoControlButton)
                         .Caption = "Rij(en) &verwijderen"
-                        .OnAction = "'" & ThisWorkbook.Name & "'!" & "rijen_verwijderen"
+                        .OnAction = "'" & ThisWorkbook.name & "'!" & "rijen_verwijderen"
                     End With 'With MenuItem
                 End If 'If ActiveCell.Locked = False
 
@@ -148,7 +148,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
                 If Not lo Is Nothing Then
                     If InStr(1, lo, "_vast", vbTextCompare) = 0 Then
                         With .Controls.Add(Type:=msoControlButton)
-                            .OnAction = "'" & ThisWorkbook.Name & "'!" & "subgroep_verwijderen"
+                            .OnAction = "'" & ThisWorkbook.name & "'!" & "subgroep_verwijderen"
                             .Caption = "Calculatie sub&groep verwijderen"
                             .BeginGroup = True
                         End With
@@ -157,21 +157,21 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
 
             Else ' If cel_in_tabel_aanwezig(ActiveCell)
 
-                If ActiveCell.Row < Range("wtb_vast").Row - 1 And ActiveCell.Row > Range("wtb_var").Row - 1 Then
-                    If (ActiveCell.Row < Range(Range(groepnaam & max_groep_rij).Value).Row) And (ActiveCell.Row > Range(Range(groepnaam & 1).Value).Row) Then
+                If ActiveCell.row < Range("wtb_vast").row - 1 And ActiveCell.row > Range("wtb_var").row - 1 Then
+                    If (ActiveCell.row < Range(Range(groepnaam & max_groep_rij).Value).row) And (ActiveCell.row > Range(Range(groepnaam & 1).Value).row) Then
                         'regels verzamelen van de kopregels van de subgroepen waarin geen subgroep ingevoegd mag worden
                         For Each lo In ActiveSheet.ListObjects
-                            naam_rijen = naam_rijen & "|" & lo.Range.Row - 1 & "|"
+                            naam_rijen = naam_rijen & "|" & lo.Range.row - 1 & "|"
                         Next lo
                         'regels verzamelen van regels waarin titels staan van de groepen, hierin mag geen subgroep worden ingevoegd
                         For rij = 1 To max_groep_rij
-                            naam_rijen = naam_rijen & "|" & Range(Range(groepnaam & rij).Value).Row & "|"
+                            naam_rijen = naam_rijen & "|" & Range(Range(groepnaam & rij).Value).row & "|"
                         Next rij  ' For rij = 1 To max_groep_rij
-                        If InStr(1, naam_rijen, "|" & ActiveCell.Row & "|", vbTextCompare) = 0 Then
+                        If InStr(1, naam_rijen, "|" & ActiveCell.row & "|", vbTextCompare) = 0 Then
                             For Each lo In ActiveSheet.ListObjects
-                                If lo.Range.Row - 1 <> ActiveCell.Row And lo.Range.Row + lo.Range.Rows.Count - 1 <> ActiveCell.Row Then
+                                If lo.Range.row - 1 <> ActiveCell.row And lo.Range.row + lo.Range.Rows.Count - 1 <> ActiveCell.row Then
                                     With .Controls.Add(Type:=msoControlButton)
-                                        .OnAction = "'" & ThisWorkbook.Name & "'!" & "subgroep_invoegen"
+                                        .OnAction = "'" & ThisWorkbook.name & "'!" & "subgroep_invoegen"
                                         .Caption = "Calculatie subgroep invoegen"
                                         Exit For
                                     End With
@@ -183,7 +183,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
             End If
 
             With .Controls.Add(Type:=msoControlButton)
-                .OnAction = "'" & ThisWorkbook.Name & "'!" & "navigatie_scherm_starten"
+                .OnAction = "'" & ThisWorkbook.name & "'!" & "navigatie_scherm_starten"
                 .BeginGroup = True
                 .Caption = "Toon navigatiescherm"
             End With
@@ -249,7 +249,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
                 .Caption = "Tonen/verbergen"
 
                 With .Controls.Add(Type:=msoControlButton)
-                    .OnAction = "'" & ThisWorkbook.Name & "'!" & "'tarieven_tonen_verbergen'"
+                    .OnAction = "'" & ThisWorkbook.name & "'!" & "'tarieven_tonen_verbergen'"
                     .BeginGroup = True
                     If Range("tarieven_tonen") Then
                         .Caption = "Verberg &tarieven"
@@ -259,7 +259,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
                 End With
 
                 With .Controls.Add(Type:=msoControlButton)
-                    .OnAction = "'" & ThisWorkbook.Name & "'!" & "'uren_tonen_verbergen'"
+                    .OnAction = "'" & ThisWorkbook.name & "'!" & "'uren_tonen_verbergen'"
                     If Range("totaal_uren_tonen") Then
                         .Caption = "Verberg totaal uren"
                     Else
@@ -268,7 +268,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
                 End With
 
                 With .Controls.Add(Type:=msoControlButton)
-                    .OnAction = "'" & ThisWorkbook.Name & "'!" & "'regels_met_kosten_tonen'"
+                    .OnAction = "'" & ThisWorkbook.name & "'!" & "'regels_met_kosten_tonen'"
                     If Range("regels_zonder_kosten_tonen") Then
                         .Caption = "Verberg subgroepregels zonder kosten"
                     Else
@@ -277,7 +277,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
                 End With
 
                 With .Controls.Add(Type:=msoControlButton)
-                    .OnAction = "'" & ThisWorkbook.Name & "'!" & "'groepen_met_kosten_tonen'"
+                    .OnAction = "'" & ThisWorkbook.name & "'!" & "'groepen_met_kosten_tonen'"
                     If Range("groepen_zonder_kosten_verbergen") Then
                         .Caption = "Verberg subgroepen zonder kosten"
                     Else
@@ -288,7 +288,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
 
 
             With .Controls.Add(Type:=msoControlButton)
-                .OnAction = "'" & ThisWorkbook.Name & "'!" & "groepen_samenvatten_tonen"
+                .OnAction = "'" & ThisWorkbook.name & "'!" & "groepen_samenvatten_tonen"
                 .BeginGroup = True
                 If Range("samenvatten") Then
                     .Caption = "Groepen tonen"
@@ -298,7 +298,7 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
             End With
 
             With .Controls.Add(Type:=msoControlButton)
-                .OnAction = "'" & ThisWorkbook.Name & "'!" & "subgroepen_samenvatten_tonen"
+                .OnAction = "'" & ThisWorkbook.name & "'!" & "subgroepen_samenvatten_tonen"
                 If Range("subsamenvatten") Then
                     .Caption = "Subgroepen tonen"
                 Else
@@ -308,13 +308,13 @@ Sub Custom_PopUpMenu_1(Optional variabele_zodat_de_macro_niet_zichtbaar_is As St
         End Select
 
         With .Controls.Add(Type:=msoControlButton)
-            .OnAction = "'" & ThisWorkbook.Name & "'!" & "afdrukken"
+            .OnAction = "'" & ThisWorkbook.name & "'!" & "afdrukken"
             .BeginGroup = True
             .Caption = "Calculatie afdrukken"
         End With
 
         With .Controls.Add(Type:=msoControlButton)
-            .OnAction = "'" & ThisWorkbook.Name & "'!" & "werkposten_optelling_tonen"
+            .OnAction = "'" & ThisWorkbook.name & "'!" & "werkposten_optelling_tonen"
             .BeginGroup = True
             .Caption = "Werkposten optelling tonen"
         End With
@@ -339,8 +339,8 @@ Sub navigeer_naar_groep()
 
 
         For Each li In ActiveSheet.ListObjects
-            rij = li.DataBodyRange.Row - 1
-            If Range(naam_kolom & li.DataBodyRange.Row - 1).Value = naam Then
+            rij = li.DataBodyRange.row - 1
+            If Range(naam_kolom & li.DataBodyRange.row - 1).Value = naam Then
 
                 Exit For
             End If
@@ -353,7 +353,7 @@ Sub navigeer_naar_groep()
 End Sub
 Sub navigeer_naar_subgroep(naam)
     Dim rij
-    For rij = Range("begin_calculatie").Row + 1 To Range("einde_calculatie").Row
+    For rij = Range("begin_calculatie").row + 1 To Range("einde_calculatie").row
         If Cells(rij, 1).Value = naam Then
             With ActiveWindow.Panes(2)
                 .ScrollRow = rij
@@ -412,7 +412,7 @@ Sub menu_uit(Optional variabele_zodat_de_macro_niet_zichtbaar_is As String)
     Dim oude_sheet
     Application.ScreenUpdating = False
     Range("menu").Value = False
-    oude_sheet = ActiveSheet.Name
+    oude_sheet = ActiveSheet.name
 
     '    Sheets(1).Select
     Sheets(oude_sheet).Select

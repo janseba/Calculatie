@@ -29,7 +29,7 @@ Sub calculatie_tonen(welke)
             Next cel
         End If
         With ActiveWindow.Panes(2)
-            .ScrollRow = Range(verwijzing).Row
+            .ScrollRow = Range(verwijzing).row
         End With
     End With
 End Sub
@@ -54,15 +54,15 @@ Sub regels_met_kosten_tonen(Optional variabele_zodat_de_macro_niet_zichtbaar_is 
     For Each lo In ActiveSheet.ListObjects
         For Each rij In lo.ListRows
 
-            If rij.Range.Row > 20 Then
+            If rij.Range.row > 20 Then
             
             If tonen = True Then
-            Rows(rij.Range.Row).RowHeight = 15
+            Rows(rij.Range.row).RowHeight = 15
             Else
-                If (Cells(rij.Range.Row, 7).Value + Cells(rij.Range.Row, 18).Value) = 0 Then
-                    Rows(rij.Range.Row).RowHeight = 0.1
+                If (Cells(rij.Range.row, 7).Value + Cells(rij.Range.row, 18).Value) = 0 Then
+                    Rows(rij.Range.row).RowHeight = 0.1
                     Else
-            Rows(rij.Range.Row).RowHeight = 15
+            Rows(rij.Range.row).RowHeight = 15
                 End If
 
             End If
@@ -102,18 +102,18 @@ Dim verw
     
     For Each lo In ActiveSheet.ListObjects
     
-    hoogte = IIf(Cells(lo.DataBodyRange.Row - 1, 19).Value = 0 And Not (tonen), 0.1, 15)
-    If lo.Name <> "template_tabel" Then
-    Range(Cells(lo.DataBodyRange.Row - 1, 1), Cells(lo.DataBodyRange.Row + lo.DataBodyRange.Rows.Count + 1, 1)).EntireRow.RowHeight = hoogte
+    hoogte = IIf(Cells(lo.DataBodyRange.row - 1, 19).Value = 0 And Not (tonen), 0.1, 15)
+    If lo.name <> "template_tabel" Then
+    Range(Cells(lo.DataBodyRange.row - 1, 1), Cells(lo.DataBodyRange.row + lo.DataBodyRange.Rows.Count + 1, 1)).EntireRow.RowHeight = hoogte
     End If
     Next lo
 
     For Each bereik In ActiveSheet.Names
-        naam = bereik.Name
+        naam = bereik.name
         verw = bereik
         
         If InStr(1, naam, "_vast", vbTextCompare) > 0 Or InStr(1, naam, "_var", vbTextCompare) > 0 Then
-        hoogte = IIf(Cells(Range(verw).Row, 19) = 0 And Not (tonen), 0.1, 22)
+        hoogte = IIf(Cells(Range(verw).row, 19) = 0 And Not (tonen), 0.1, 22)
         Range(verw).RowHeight = hoogte
         End If
         
@@ -170,7 +170,7 @@ Sub toon_tarieven(Optional variabele_zodat_de_macro_niet_zichtbaar_is As String)
     End With
 
     With ActiveSheet
-        If InStr(1, .Name, "calculatie_", vbTextCompare) > 0 Then
+        If InStr(1, .name, "calculatie_", vbTextCompare) > 0 Then
             beveiliging (False)
             For Each cel In .Range("uren")
                 If InStr(1, LCase(cel.Value), "tarief", vbTextCompare) > 0 Then
@@ -197,7 +197,7 @@ Sub toon_uren(Optional variabele_zodat_de_macro_niet_zichtbaar_is As String)
     End With
 
     With ActiveSheet
-        If InStr(1, .Name, "calculatie_", vbTextCompare) > 0 Then
+        If InStr(1, .name, "calculatie_", vbTextCompare) > 0 Then
 
             beveiliging (False)
             For Each cel In .Range("uren")
@@ -243,11 +243,11 @@ Sub rijen_invoegen(Optional variabele_zodat_de_macro_niet_zichtbaar_is As String
         If IsNumeric(r) Then
             beveiliging (False)
             For rij = 1 To r
-                lrow = ocell.Row - olo.DataBodyRange.Cells(1, 1).Row + 1
+                lrow = ocell.row - olo.DataBodyRange.Cells(1, 1).row + 1
                 Application.StatusBar = "Invoegen rij " & rij
                 'ActiveCell.ListObject.ListRows.Add (lrow)
                 
-                Rows(olo.DataBodyRange.Cells(1, 1).Row + 1).Insert
+                Rows(olo.DataBodyRange.Cells(1, 1).row + 1).Insert
                 
                 
                 
@@ -297,7 +297,7 @@ Sub rijen_verwijderen(Optional variabele_zodat_de_macro_niet_zichtbaar_is As Str
             Else
                 If tabel.DataBodyRange.Rows.Count > 1 Then
                     beveiliging (False)
-                    For r = Application.Selection.Row + Selection.Rows.Count - 1 To Application.Selection.Row Step -1
+                    For r = Application.Selection.row + Selection.Rows.Count - 1 To Application.Selection.row Step -1
                         Debug.Print Cells(r, Selection.Column).Address
                         Rows(r).Delete Shift:=xlUp
                     Next r
@@ -347,14 +347,14 @@ Sub subgroep_verwijderen(Optional variabele_zodat_de_macro_niet_zichtbaar_is As 
         '                End If
 
         melding = "Zeker weten dat je de groep ""naam_groep"" wilt verwijderen"
-        groepsnaam = "van regel " & lo.Range.Row & " t/m " & lo.Range.Row + lo.Range.Rows.Count - 1
-        If Range(naam_kolom & lo.Range.Row - 1) <> "" Then groepsnaam = Range(naam_kolom & lo.Range.Row - 1)
+        groepsnaam = "van regel " & lo.Range.row & " t/m " & lo.Range.row + lo.Range.Rows.Count - 1
+        If Range(naam_kolom & lo.Range.row - 1) <> "" Then groepsnaam = Range(naam_kolom & lo.Range.row - 1)
         melding = Replace(melding, "naam_groep", groepsnaam)
         Select Case MsgBox(melding, vbYesNo)
             Case vbYes
             Application.ScreenUpdating = False
 
-            begin_rij = lo.Range.Row - 1
+            begin_rij = lo.Range.row - 1
             eind_rij = begin_rij + lo.Range.Rows.Count + 1
 
             beveiliging (False)
@@ -424,12 +424,12 @@ Dim naam_zonder_underscores
 
     instellingen_ophalen
 
-    If ActiveCell.Row > Range(Range(groepnaam & max_groep_rij).Value).Row Then
+    If ActiveCell.row > Range(Range(groepnaam & max_groep_rij).Value).row Then
         melding = "Er kan geen groep toegevoegd worden na het einde van de calculatie"
         GoTo einde
     End If
 
-    If ActiveCell.Row < Range(Range(groepnaam & 1).Value).Row Then
+    If ActiveCell.row < Range(Range(groepnaam & 1).Value).row Then
         melding = "Er kan geen groep toegevoegd worden voor het begin van de calculatie"
         GoTo einde
     End If
@@ -449,7 +449,7 @@ Dim naam_zonder_underscores
 
     With ActiveSheet
 '    Stop
-        Set bron_tabell = Sheets("calculatie_1").ListObjects("template_tabel")
+        Set bron_tabell = Sheets("calculatie_").ListObjects("template_tabel")
         'controle op aanwezigheid in tabel
         If cel_in_tabel_aanwezig(ActiveCell) = True Then
             melding = "In een subgroep kan geen andere groep toegevoegd worden, selecteer een andere cel"
@@ -457,7 +457,7 @@ Dim naam_zonder_underscores
         End If
 
         For rij = 1 To max_groep_rij
-            If ActiveCell.Row = Range(Range(groepnaam & rij).Value).Row Then
+            If ActiveCell.row = Range(Range(groepnaam & rij).Value).row Then
                 melding = "Op deze rij kan geen subgroep worden toegevoegd"
                 GoTo einde
             End If
@@ -467,7 +467,7 @@ Dim naam_zonder_underscores
 
         'kijken in welke deel van de calculatie de actieve cel zich bevindt aan de hand daarvan de voorloop van de naam bepalen
         For rij = 1 To max_groep_rij - 1
-            adres = ("A" & Range(Range(groepnaam & rij).Value).Row) & ":" & ("AA" & Range(Range(groepnaam & rij + 1).Value).Row)
+            adres = ("A" & Range(Range(groepnaam & rij).Value).row) & ":" & ("AA" & Range(Range(groepnaam & rij + 1).Value).row)
             'adres = Range(Range(groepnaam & rij).Value).Row & ":" & Range(Range(groepnaam & rij + 1).Value).Row
             If Intersect(ActiveCell, Range(adres)) Is Nothing Then
             
@@ -490,12 +490,12 @@ Dim naam_zonder_underscores
 
         'controleren of de tabel vlak boven een andere groep zit
         max_rij_Tabel = 9
-        groep_rij = Range(Range(groepnaam & rij + 1).Value).Row - 1
+        groep_rij = Range(Range(groepnaam & rij + 1).Value).row - 1
         For rij_teller = 0 To max_rij_Tabel
-            If ActiveCell.Row + rij_teller >= groep_rij Then
+            If ActiveCell.row + rij_teller >= groep_rij Then
             beveiliging (False)
-                Rows(ActiveCell.Row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
-                Rows(8).Copy Rows(ActiveCell.Row)
+                Rows(ActiveCell.row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+                Rows(8).Copy Rows(ActiveCell.row)
             End If
         Next rij_teller
 
@@ -504,12 +504,12 @@ Dim naam_zonder_underscores
         'kijken welk volgnummer de tabelnaam dient te krijgen door alle tabellen door te lopen
         'en te kijken of de tabel met het bewuste volgnummer aanwezig is.
         For Each tabel In ActiveSheet.ListObjects
-            tabellen = tabellen & "|" & tabel.Name & "|"
+            tabellen = tabellen & "|" & tabel.name & "|"
         Next tabel
         tabel_niet_aanwezig = False
         While tabel_niet_aanwezig = False
         teller = teller + 1
-        tabel_naam = tbl_naam & "_" & teller & "_" & GetCodenameFromWorksheet(ActiveSheet.Name) & IIf(ActiveSheet.Range("aan_te_maken_subgroep") <> "", "__" & ActiveSheet.Range("aan_te_maken_subgroep"), "")
+        tabel_naam = tbl_naam & "_" & teller & "_" & GetCodenameFromWorksheet(ActiveSheet.name) & IIf(ActiveSheet.Range("aan_te_maken_subgroep") <> "", "__" & ActiveSheet.Range("aan_te_maken_subgroep"), "")
         If InStr(1, tabellen, "|" & tabel_naam, vbTextCompare) = 0 Then
             tabel_niet_aanwezig = True
         End If
@@ -521,9 +521,9 @@ Dim naam_zonder_underscores
 
     ' controleren of de subgroep wordt aangemaakt in een andere subgroep dat is namelijk niet toegestaan
     For Each lo In ActiveSheet.ListObjects
-        If InStr(1, lo.Name, tbl_naam, vbTextCompare) > 0 Then
-            eerste_tabel_rij = (lo.Range.Row - 1)
-            If ActiveCell.Row = eerste_tabel_rij Then
+        If InStr(1, lo.name, tbl_naam, vbTextCompare) > 0 Then
+            eerste_tabel_rij = (lo.Range.row - 1)
+            If ActiveCell.row = eerste_tabel_rij Then
                 melding = "In een subgroep kan geen andere subgroep toegevoegd worden, selecteer een andere cel"
                 GoTo einde
             End If
@@ -535,20 +535,20 @@ Dim naam_zonder_underscores
     If test Then Stop
     beveiliging (False)
     For Each lo In ActiveSheet.ListObjects
-        If InStr(1, lo.Name, tbl_naam, vbTextCompare) > 0 Then
+        If InStr(1, lo.name, tbl_naam, vbTextCompare) > 0 Then
             If test Then Stop
-            laatste_tabel_rij = (lo.Range.Row + lo.Range.Rows.Count)
+            laatste_tabel_rij = (lo.Range.row + lo.Range.Rows.Count)
             
 '            Stop
             Dim rij_
-            rij_ = ActiveCell.Row
+            rij_ = ActiveCell.row
             
-            If (ActiveCell.Row - laatste_tabel_rij) < 3 And (ActiveCell.Row - laatste_tabel_rij) >= 0 Then
+            If (ActiveCell.row - laatste_tabel_rij) < 3 And (ActiveCell.row - laatste_tabel_rij) >= 0 Then
             
             For x = 1 To 3
-                Rows(ActiveCell.Row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
-                               Rows(8).Copy Rows(ActiveCell.Row)
-                                             Cells(ActiveCell.Row + 1, ActiveCell.Column).Select
+                Rows(ActiveCell.row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+                               Rows(8).Copy Rows(ActiveCell.row)
+                                             Cells(ActiveCell.row + 1, ActiveCell.Column).Select
                                 Next x
                 
               '  Cells(rij_, ActiveCell.Column).Select
@@ -561,13 +561,13 @@ Dim naam_zonder_underscores
  If test Then Stop
 
     For Each lo In ActiveSheet.ListObjects
-        If InStr(1, lo.Name, tbl_naam, vbTextCompare) > 0 Then
+        If InStr(1, lo.name, tbl_naam, vbTextCompare) > 0 Then
             If test Then Stop
-            eerste_tabel_rij = (lo.Range.Row - 2)
-            If ActiveCell.Row = eerste_tabel_rij Then
-                Rows(ActiveCell.Row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
-                Rows(8).Copy Rows(ActiveCell.Row + 1)
-                Cells(ActiveCell.Row + 1, ActiveCell.Column).Select
+            eerste_tabel_rij = (lo.Range.row - 2)
+            If ActiveCell.row = eerste_tabel_rij Then
+                Rows(ActiveCell.row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
+                Rows(8).Copy Rows(ActiveCell.row + 1)
+                Cells(ActiveCell.row + 1, ActiveCell.Column).Select
                 Exit For
             End If
         End If
@@ -576,11 +576,11 @@ Dim naam_zonder_underscores
     verschil = 9999999
 
     For Each lo In ActiveSheet.ListObjects
-        If InStr(1, lo.Name, tbl_naam, vbTextCompare) > 0 Then
+        If InStr(1, lo.name, tbl_naam, vbTextCompare) > 0 Then
             'If lo.Range.Row - 4 - ActiveCell.Row < verschil And (lo.Range.Row - 2 - ActiveCell.Row) >= 0 Then
-            If lo.Range.Row - 3 - ActiveCell.Row < verschil And (lo.Range.Row - 3 - ActiveCell.Row) >= 0 Then
-                verschil_naam = lo.Name
-                verschil = lo.Range.Row - 4 - ActiveCell.Row
+            If lo.Range.row - 3 - ActiveCell.row < verschil And (lo.Range.row - 3 - ActiveCell.row) >= 0 Then
+                verschil_naam = lo.name
+                verschil = lo.Range.row - 4 - ActiveCell.row
                 'verschil = lo.Range.Row - 2 - ActiveCell.Row
             End If
         End If
@@ -589,15 +589,15 @@ Dim naam_zonder_underscores
     If verschil_naam <> "" Then
         Set lo = ActiveSheet.ListObjects(verschil_naam)
         If test Then Stop
-        eerste_tabel_rij = (lo.Range.Row - 2)
-        If eerste_tabel_rij >= ActiveCell.Row Then
+        eerste_tabel_rij = (lo.Range.row - 2)
+        If eerste_tabel_rij >= ActiveCell.row Then
             cel = ActiveCell.Address
-            eerste_tabel_rij_aanmaak = ActiveCell.Row
+            eerste_tabel_rij_aanmaak = ActiveCell.row
             beveiliging (False)
             While eerste_tabel_rij_aanmaak + max_rij_Tabel >= eerste_tabel_rij
-            Rows(ActiveCell.Row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
-            Cells(ActiveCell.Row + 1, ActiveCell.Column).Select
-            eerste_tabel_rij = (lo.Range.Row - 2)
+            Rows(ActiveCell.row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+            Cells(ActiveCell.row + 1, ActiveCell.Column).Select
+            eerste_tabel_rij = (lo.Range.row - 2)
         Wend
         Range(cel).Select
     End If
@@ -606,40 +606,40 @@ End If
 If test Then Stop
 
 'bepalen hoever de actieve cel van de ondergrens af zit
-bovengrens_rij = Range("wtb_var").Row + 3
-ondergrens_rij = Range("einde_calculatie").Row - 2
+bovengrens_rij = Range("wtb_var").row + 3
+ondergrens_rij = Range("einde_calculatie").row - 2
 
 ' controleren of de geselecteerde cel ver genoeg zit van de ondergrens
-If ActiveCell.Row + 7 > ondergrens_rij Then
-    For rij_teller = ActiveCell.Row To ActiveCell.Row + (ActiveCell.Row + 6 - ondergrens_rij)
+If ActiveCell.row + 7 > ondergrens_rij Then
+    For rij_teller = ActiveCell.row To ActiveCell.row + (ActiveCell.row + 6 - ondergrens_rij)
         Stop
-        Rows(ActiveCell.Row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+        Rows(ActiveCell.row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
     Next rij_teller
 End If
 
 ' controleren of de geselecteerde cel ver genoeg zit van de bovengrens
-If ActiveCell.Row <= bovengrens_rij Then
-    For rij_teller = ActiveCell.Row To ActiveCell.Row + (ActiveCell.Row + 1 - bovengrens_rij)
-        Rows(ActiveCell.Row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
-        Cells(ActiveCell.Row + 1, ActiveCell.Column).Select
+If ActiveCell.row <= bovengrens_rij Then
+    For rij_teller = ActiveCell.row To ActiveCell.row + (ActiveCell.row + 1 - bovengrens_rij)
+        Rows(ActiveCell.row).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
+        Cells(ActiveCell.row + 1, ActiveCell.Column).Select
     Next rij_teller
 End If
 
-bron_rij = bron_tabell.DataBodyRange.Cells(1, 1).Row - 1
+bron_rij = bron_tabell.DataBodyRange.Cells(1, 1).row - 1
 
-bron_tabell.Range.Copy Destination:=Range(naam_kolom & ActiveCell.Row + 1)
-.Range(naam_kolom & ActiveCell.Row + 1).ListObject.Name = doel_tabel
+bron_tabell.Range.Copy Destination:=Range(naam_kolom & ActiveCell.row + 1)
+.Range(naam_kolom & ActiveCell.row + 1).ListObject.name = doel_tabel
 
 Set tbl = .ListObjects(doel_tabel)
 tbl.ShowTotals = True
-doel_rij = tbl.DataBodyRange.Cells(1, 1).Row - 1
+doel_rij = tbl.DataBodyRange.Cells(1, 1).row - 1
 
 'kop_rij kopieren
 .Rows(bron_rij).EntireRow.Copy .Rows(doel_rij)
 
 If ActiveSheet.Range("aan_te_maken_subgroep").Value <> "" Then
 
-    lr_groepen = Sheets("subgroepen").Cells(Sheets("subgroepen").Rows.Count, Sheets("subgroepen").Range("a1").Column).End(xlUp).Row
+    lr_groepen = Sheets("subgroepen").Cells(Sheets("subgroepen").Rows.Count, Sheets("subgroepen").Range("a1").Column).End(xlUp).row
 
     For r = 1 To lr_groepen
         If Sheets("subgroepen").Cells(r, 1).Value = ActiveSheet.Range("aan_te_maken_subgroep") Then
@@ -649,7 +649,7 @@ If ActiveSheet.Range("aan_te_maken_subgroep").Value <> "" Then
 
     With ActiveSheet.ListObjects(doel_tabel)
 
-        rji = ActiveSheet.ListObjects(doel_tabel).Range.Row + 1
+        rji = ActiveSheet.ListObjects(doel_tabel).Range.row + 1
         aanwezige_rijen = .Range.Rows.Count - 1
 
         'rijen toevoegen om de voorgedefinieerde regels toe te kunnen voegen
@@ -657,7 +657,7 @@ If ActiveSheet.Range("aan_te_maken_subgroep").Value <> "" Then
             Rows(rji).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromLeftOrAbove
         Next x
 
-        rji = ActiveSheet.ListObjects(doel_tabel).Range.Row
+        rji = ActiveSheet.ListObjects(doel_tabel).Range.row
 
         'beginregel voor de subgroep bepalen
         With Sheets("subgroepen")
@@ -673,7 +673,7 @@ If ActiveSheet.Range("aan_te_maken_subgroep").Value <> "" Then
         Set sh_sub_groep = Sheets("subgroepen")
 
         With ActiveSheet
-            rji = .ListObjects(doel_tabel).Range.Row
+            rji = .ListObjects(doel_tabel).Range.row
             teller = 0
             For r = rji To rji + aantal_regels_subgroep - 1
                 .Cells(r, Range(naam_kolom & "1").Column).Formula = sh_sub_groep.Cells(begin_rij_groep + teller, 2).Formula
@@ -702,18 +702,18 @@ End If
 naam_zonder_underscores = Replace(tabel_naam, " ", "_")
 
 'aanpassen van de totalisering van de nieuw toe te voegen tabel
-Range("s" & tbl.DataBodyRange.Row - 1).FormulaR1C1 = Replace(Range("s" & tbl.DataBodyRange.Row - 1).FormulaR1C1, "template_tabel", naam_zonder_underscores)
+Range("s" & tbl.DataBodyRange.row - 1).FormulaR1C1 = Replace(Range("s" & tbl.DataBodyRange.row - 1).FormulaR1C1, "template_tabel", naam_zonder_underscores)
 
 For k = 1 To Range("kolom_kop").Columns.Count
-    r = Range("kolom_kop").Row
+    r = Range("kolom_kop").row
     'Aantal kolom aanpassen naar het aantal van de desbetreffende subgroep
     If InStr(1, LCase(.Cells(r, k).Value), "totaal") Then
-        ri = tbl.DataBodyRange.Row
+        ri = tbl.DataBodyRange.row
         .Cells(ri, k).Formula = Replace(.Cells(ri, k).Formula, Range("aantal_indicatie").Address, "$E$" & doel_rij)
     End If ' If InStr(1, LCase(.Cells(r, k).Value), "totaal")
 
     'aanpassen van de totalisering naar de huidige tabel
-    If InStr(1, LCase(.Cells(r, k).Value), "verkoopbedrag") Then .Cells(doel_rij, k).Formula = Replace(Cells(doel_rij, k).Formula, bron_tabell.Name, doel_tabel)
+    If InStr(1, LCase(.Cells(r, k).Value), "verkoopbedrag") Then .Cells(doel_rij, k).Formula = Replace(Cells(doel_rij, k).Formula, bron_tabell.name, doel_tabel)
 
 Next k 'For k = 1 To Range("kolom_kop").Columns.Count
 
@@ -725,7 +725,7 @@ End If
 If ActiveSheet.Range("aan_te_maken_subgroep").Value = "" Then
     With tbl
         While .DataBodyRange.Rows.Count > 3
-        ActiveSheet.Rows(.Range.Row + 1).EntireRow.Delete
+        ActiveSheet.Rows(.Range.row + 1).EntireRow.Delete
     Wend
 End With 'With tbl
 End If
@@ -794,14 +794,14 @@ Sub rijen_goed_zetten()
         For naam_rij = 1 To max_groep_rij
             Application.StatusBar = "Rijen verzamelen " & naam_rij
             naam = .Range(groepnaam & naam_rij)
-            If naam_rij > 1 Then adressen = "|" & adressen & "|" & Cells(Range(Range(groepnaam & naam_rij)).Row - 1, 1).Address & "|"
+            If naam_rij > 1 Then adressen = "|" & adressen & "|" & Cells(Range(Range(groepnaam & naam_rij)).row - 1, 1).Address & "|"
             If naam_rij < max_groep_rij Then
-                adressen = adressen & Cells(Range(Range(groepnaam & naam_rij)).Row + 1, 1).Address
+                adressen = adressen & Cells(Range(Range(groepnaam & naam_rij)).row + 1, 1).Address
             End If 'If naam_rij < max_groep_rij
         Next naam_rij 'For naam_rij = 1 To max_groep_rij
 
         beveiliging (False)
-        For rij = Range("wtb_var").Row To Range("einde_calculatie").Row
+        For rij = Range("wtb_var").row To Range("einde_calculatie").row
             adres = Cells(rij, 1).Address
             Application.StatusBar = "Rijen tonen/verbergen: " & naam_rij
             If InStr(1, adressen, "|" & adres & "|") > 0 Or .Cells(rij, 1) = "Kolom1" Then
@@ -846,8 +846,8 @@ Sub formules_goedzetten(Optional variabele_zodat_de_macro_niet_zichtbaar_is As S
 
     With ActiveSheet
         For rij = 1 To max_groep_rij - 1
-            groep_rij_begin = Range(Range(groepnaam & rij).Value).Row
-            groep_rij_eind = Range(Range(groepnaam & rij + 1).Value).Row - 1
+            groep_rij_begin = Range(Range(groepnaam & rij).Value).row
+            groep_rij_eind = Range(Range(groepnaam & rij + 1).Value).row - 1
             LastCol = .Cells(groep_rij_begin, .Columns.Count).End(xlToLeft).Column
             For kolom = 1 To LastCol
                 letter = LCase(Split(Cells(groep_rij_begin, kolom).Address, "$")(1))
@@ -887,17 +887,17 @@ Sub groepen_samenvatten_tonen(Optional variabele_zodat_de_macro_niet_zichtbaar_i
     If Range("samenvatten") Then
         Range("samenvatten") = False
         For rij = 1 To max_groep_rij - 1
-            adres = naam_kolom & Range(Range(groepnaam & rij).Value).Row + 1 & ":A" & Range(Range(groepnaam & rij + 1).Value).Row - 2
+            adres = naam_kolom & Range(Range(groepnaam & rij).Value).row + 1 & ":A" & Range(Range(groepnaam & rij + 1).Value).row - 2
             Range(adres).RowHeight = 15
         Next rij  ' For rij = 1 To 7
 
-        For rij = Range("begin_calculatie").Row To Range("einde_calculatie").Row
+        For rij = Range("begin_calculatie").row To Range("einde_calculatie").row
             If LCase(Cells(rij, 1).Value) = "kolom1" Then Cells(rij, 1).RowHeight = 0
         Next rij
     Else
         'kijken in welke deel van de calculatie de actieve cel zich bevindt aan de hand daarvan de voorloop van de naam bepalen
         For rij = 1 To max_groep_rij - 1
-            adres = naam_kolom & Range(Range(groepnaam & rij).Value).Row + 1 & ":" & naam_kolom & Range(Range(groepnaam & rij + 1).Value).Row - 2
+            adres = naam_kolom & Range(Range(groepnaam & rij).Value).row + 1 & ":" & naam_kolom & Range(Range(groepnaam & rij + 1).Value).row - 2
             Range(adres).RowHeight = 0.1
         Next rij  ' For rij = 1 To 7
         Range("samenvatten") = True
@@ -928,11 +928,11 @@ Sub subgroepen_samenvatten_tonen(Optional variabele_zodat_de_macro_niet_zichtbaa
         Range("samenvatten") = False
 
         For rij = 1 To max_groep_rij - 1
-            adres = naam_kolom & Range(Range(groepnaam & rij).Value).Row + 1 & ":" & naam_kolom & Range(Range(groepnaam & rij + 1).Value).Row - 2
+            adres = naam_kolom & Range(Range(groepnaam & rij).Value).row + 1 & ":" & naam_kolom & Range(Range(groepnaam & rij + 1).Value).row - 2
             Range(adres).RowHeight = 15
         Next rij  ' For rij = 1 To 7
 
-        For rij = Range("begin_calculatie").Row To Range("einde_calculatie").Row
+        For rij = Range("begin_calculatie").row To Range("einde_calculatie").row
             If LCase(Cells(rij, 1).Value) = "kolom1" Then Cells(rij, 1).RowHeight = 0
         Next rij
 
@@ -940,7 +940,7 @@ Sub subgroepen_samenvatten_tonen(Optional variabele_zodat_de_macro_niet_zichtbaa
 
         'kijken in welke deel van de calculatie de actieve cel zich bevindt aan de hand daarvan de voorloop van de naam bepalen
         For rij = 1 To max_groep_rij - 1
-            adres = naam_kolom & Range(Range(groepnaam & rij).Value).Row + 1 & ":" & naam_kolom & Range(Range(groepnaam & rij + 1).Value).Row - 2
+            adres = naam_kolom & Range(Range(groepnaam & rij).Value).row + 1 & ":" & naam_kolom & Range(Range(groepnaam & rij + 1).Value).row - 2
             Range(adres).RowHeight = 0.1
         Next rij
 
@@ -989,21 +989,21 @@ End Function
 Sub calculatie_sheet_aanmaken()
 Dim c
 For Each c In ThisWorkbook.VBProject.VBComponents
-If LCase(Left(c.Name, 10)) = "calculatie" Then
+If LCase(Left(c.name, 10)) = "calculatie" Then
 End If
 
-Debug.Print c.Name
+Debug.Print c.name
 Next c
-ThisWorkbook.VBProject.VBComponents(ActiveSheet.Name).Name = "calculatie_2"
+ThisWorkbook.VBProject.VBComponents(ActiveSheet.name).name = "calculatie_2"
 End Sub
 
     Sub namen_aanpassen()
-Dim naam As Name
+Dim naam As name
 For Each naam In ActiveSheet.Names
-If InStr(1, naam.Name, "variabel", vbTextCompare) > 0 Then
-Debug.Print naam.Name
+If InStr(1, naam.name, "variabel", vbTextCompare) > 0 Then
+Debug.Print naam.name
 Debug.Print naam.RefersTo
-ActiveSheet.Names.Add Replace(naam.Name, "variabel", "var"), naam.RefersTo
+ActiveSheet.Names.Add Replace(naam.name, "variabel", "var"), naam.RefersTo
 End If
 Next naam
 
@@ -1011,12 +1011,12 @@ Dim lo As ListObject
 
 For Each lo In ActiveSheet.ListObjects
 
-If InStr(1, lo.Name, "variabel", vbTextCompare) > 0 Then
-lo.Name = Replace(lo.Name, "variabel", "var")
+If InStr(1, lo.name, "variabel", vbTextCompare) > 0 Then
+lo.name = Replace(lo.name, "variabel", "var")
 End If
 
-If InStr(1, lo.Name, "calculatie", vbTextCompare) > 0 Then
-lo.Name = Replace(lo.Name, "calculatie", "calc")
+If InStr(1, lo.name, "calculatie", vbTextCompare) > 0 Then
+lo.name = Replace(lo.name, "calculatie", "calc")
 End If
 
 

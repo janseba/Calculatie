@@ -24,8 +24,8 @@ Private Sub LB_gevonden_artikelen_DblClick(ByVal Cancel As MSForms.ReturnBoolean
     End With
 
     With ActiveSheet
-        If InStr(1, LCase(.Name), "calculatie", 0) Then
-            .Cells(ActiveCell.Row, 3).Value = artikelnummer
+        If InStr(1, LCase(.name), "calculatie", 0) Then
+            .Cells(ActiveCell.row, 3).Value = artikelnummer
         End If
     End With
     
@@ -39,7 +39,7 @@ If Len(TXT_omschrijving) > 2 Then
 LB_gevonden_artikelen.Clear
 
 With Sheets("prijslijst to be")
-laatste_rij = .Cells(.Rows.Count, "D").End(xlUp).Row
+laatste_rij = .Cells(.Rows.Count, "D").End(xlUp).row
 For rij = 3 To laatste_rij
 celinhoud = .Cells(rij, Range("D1").Column).Value
 

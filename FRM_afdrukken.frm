@@ -44,7 +44,7 @@ End Sub
 
 Sub selecteren(wat)
     For Each ctl In Me.Controls
-        If InStr(1, ctl.Name, "calculatie", vbTextCompare) Then
+        If InStr(1, ctl.name, "calculatie", vbTextCompare) Then
             ctl.Value = wat
         End If
     Next ctl

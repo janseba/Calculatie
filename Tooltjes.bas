@@ -73,14 +73,14 @@ Private Sub dataregels_tonen_verbergen(verbergen, alles_verbergen)
 
     'door alle tabellen heen lopen
     For Each li In ActiveSheet.ListObjects
-        If li.Name <> "template_tabel" Then
-            lrow = li.DataBodyRange.Cells(0, 1).Row
+        If li.name <> "template_tabel" Then
+            lrow = li.DataBodyRange.Cells(0, 1).row
             If lege_tabellen_verbergen Then
                 If Cells(lrow, 18) = 0 Then
                     li.Range.EntireRow.Hidden = verbergen
                     Cells(lrow, 18).EntireRow.Hidden = verbergen
                     Cells(lrow - 1, 18).EntireRow.Hidden = verbergen
-                    Cells(li.Range.Row + li.Range.Rows.Count, 18).EntireRow.Hidden = verbergen
+                    Cells(li.Range.row + li.Range.Rows.Count, 18).EntireRow.Hidden = verbergen
                 End If
             Else
                 'als het totaal van de tabel 0 of alle regels moeten worden verborgen
@@ -108,9 +108,9 @@ End Sub
 Sub rijhoogte_aanpassen(Optional variabele_zodat_de_macro_niet_zichtbaar_is As String)
 
     For Each li In ActiveSheet.ListObjects
-        If li.Name <> "template_tabel" Then
+        If li.name <> "template_tabel" Then
             For Each rij In li.DataBodyRange.Rows
-                If rij.Row = li.DataBodyRange.Cells(0, 1).Row Then
+                If rij.row = li.DataBodyRange.Cells(0, 1).row Then
                 Else
                     rij.EntireRow.RowHeight = 15
                 End If
@@ -134,12 +134,12 @@ Private Sub bereiken_met_fouten_verwijderen()
     End With
 
     Dim intCounter As Integer
-    Dim nmTemp As Name
-    Dim bereik As Name
+    Dim nmTemp As name
+    Dim bereik As name
 
     For Each bereik In ActiveWorkbook.Names
 
-        naam = bereik.Name
+        naam = bereik.name
         verw = bereik
 
         Debug.Print naam
@@ -162,8 +162,8 @@ End Sub
 
 Sub subgroep_kop_opmaak()
     Dim intCounter As Integer
-    Dim nmTemp As Name
-    Dim bereik As Name
+    Dim nmTemp As name
+    Dim bereik As name
 Dim naam
 Dim verw
 'Dim bereik As Name
@@ -174,7 +174,7 @@ Dim verw
     End With
 beveiliging (False)
     For Each bereik In ActiveSheet.Names
-        naam = bereik.Name
+        naam = bereik.name
         verw = bereik
         If InStr(1, naam, "_vast", vbTextCompare) > 0 Or _
         InStr(1, naam, "_var", vbTextCompare) > 0 Or _
@@ -202,7 +202,7 @@ End Sub
 Sub opmaak_kop()
 
  For Each li In ActiveSheet.ListObjects
-    rij = li.DataBodyRange.Row - 1
+    rij = li.DataBodyRange.row - 1
     With Range(Cells(rij, 2), Cells(rij, 4))
     
         With .Interior
@@ -224,15 +224,15 @@ End Sub
 Sub formules_aanpassen()
 Application.Calculation = xlCalculationManual
 For Each li In ActiveSheet.ListObjects
-If li.Name = "template_tabel" Then
-    Range(li.Name & "[Kolom9]").FormulaR1C1 = "=[@Kolom8]*R" & li.DataBodyRange.Row - 1 & "C5"
-    Range(li.Name & "[Kolom10]").FormulaR1C1 = "=([@Kolom8]<>"""")*R4C23"
-    Range(li.Name & "[Kolom11]").FormulaR1C1 = "=IF([@Kolom8]<>0,[@Kolom9]*[@Kolom10],"""")"
-    Range(li.Name & "[Kolom13]").FormulaR1C1 = "=R" & li.DataBodyRange.Row - 1 & "C5*[@Kolom12]"
-    Range(li.Name & "[Kolom14]").FormulaR1C1 = "=IF([@Kolom12]<>0,R4C23,"""")"
-    Range(li.Name & "[Kolom15]").FormulaR1C1 = "=IF([@Kolom12],[@Kolom13]*[@Kolom14],"""")"
-    Range(li.Name & "[Kolom16]").FormulaR1C1 = "=IF([@Kolom12],[@Kolom9]+[@Kolom13],0)"
-    Range(li.Name & "[Kolom17]").FormulaR1C1 = "=IF([@Kolom12],IF([@Kolom11]<>"""",[@Kolom11],0)+IF([@Kolom15]<>"""",[@Kolom15],0),0)"
+If li.name = "template_tabel" Then
+    Range(li.name & "[Kolom9]").FormulaR1C1 = "=[@Kolom8]*R" & li.DataBodyRange.row - 1 & "C5"
+    Range(li.name & "[Kolom10]").FormulaR1C1 = "=([@Kolom8]<>"""")*R4C23"
+    Range(li.name & "[Kolom11]").FormulaR1C1 = "=IF([@Kolom8]<>0,[@Kolom9]*[@Kolom10],"""")"
+    Range(li.name & "[Kolom13]").FormulaR1C1 = "=R" & li.DataBodyRange.row - 1 & "C5*[@Kolom12]"
+    Range(li.name & "[Kolom14]").FormulaR1C1 = "=IF([@Kolom12]<>0,R4C23,"""")"
+    Range(li.name & "[Kolom15]").FormulaR1C1 = "=IF([@Kolom12],[@Kolom13]*[@Kolom14],"""")"
+    Range(li.name & "[Kolom16]").FormulaR1C1 = "=IF([@Kolom12],[@Kolom9]+[@Kolom13],0)"
+    Range(li.name & "[Kolom17]").FormulaR1C1 = "=IF([@Kolom12],IF([@Kolom11]<>"""",[@Kolom11],0)+IF([@Kolom15]<>"""",[@Kolom15],0),0)"
 End If
 Next li
 Application.Calculation = xlCalculationAutomatic

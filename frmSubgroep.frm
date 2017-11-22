@@ -51,7 +51,7 @@ Dim subgroepen As String
 frmSubgroep.lb_subgroep.Clear
 
 With Sheets("subgroepen")
-        lr = .Cells(.Rows.Count, Range("A1").Column).End(xlUp).Row
+        lr = .Cells(.Rows.Count, Range("A1").Column).End(xlUp).row
 subgroepen = ""
 For r = 2 To lr
 If InStr(1, subgroepen, .Cells(r, 1).Value, vbTextCompare) = 0 Then subgroepen = subgroepen & "|" & .Cells(r, 1).Value & "|"

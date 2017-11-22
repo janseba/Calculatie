@@ -20,12 +20,12 @@ End Sub
 
 Private Sub LB_navigatie_Click()
 For Each lb In ActiveSheet.ListObjects
-naam = Cells(lb.DataBodyRange.Row - 1, lb.DataBodyRange.Column)
+naam = Cells(lb.DataBodyRange.row - 1, lb.DataBodyRange.Column)
 If LB_navigatie.Value = naam Then
       With ActiveWindow.Panes(2)
-            .ScrollRow = lb.DataBodyRange.Row - 3
+            .ScrollRow = lb.DataBodyRange.row - 3
         End With
-        Cells(lb.DataBodyRange.Row, lb.DataBodyRange.Column).Select
+        Cells(lb.DataBodyRange.row, lb.DataBodyRange.Column).Select
 Exit For
 End If
 Next lb
@@ -37,7 +37,7 @@ If ActiveSheet.Range(groepnaam & x).Offset(0, 1) = lb_groepen.Value Then
 With ActiveWindow.Panes(2)
 y = ActiveSheet.Range(groepnaam & x)
      With ActiveWindow.Panes(2)
-            .ScrollRow = ActiveSheet.Names(y).RefersToRange.Row
+            .ScrollRow = ActiveSheet.Names(y).RefersToRange.row
         End With
 End With
 Exit For
@@ -147,10 +147,10 @@ LB_navigatie.Clear
 
 For Each lb In ActiveSheet.ListObjects
 
-tabel_naam = Cells(lb.DataBodyRange.Row - 1, lb.DataBodyRange.Column)
-bedrag = Cells(lb.DataBodyRange.Row - 1, 19)
+tabel_naam = Cells(lb.DataBodyRange.row - 1, lb.DataBodyRange.Column)
+bedrag = Cells(lb.DataBodyRange.row - 1, 19)
 
-If Replace(tabel_naam, " ", "") = "" Then tabel_naam = lb.Name
+If Replace(tabel_naam, " ", "") = "" Then tabel_naam = lb.name
 
 If InStr(1, LCase(tabel_naam), LCase(TXT_zoeken.Value), vbTextCompare) > 0 Then
 If CHK_bedrag Then

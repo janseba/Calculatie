@@ -27,11 +27,11 @@ With Application
 .EnableEvents = False
 End With
 
-    begin_rij = Range("begin_" & Application.Caller).Row
+    begin_rij = Range("begin_" & Application.Caller).row
     If Right(Application.Caller, 1) < 4 Then
-    eind_rij = Range("begin_" & Left(Application.Caller, Len(Application.Caller) - 1) & Right(Application.Caller, 1) + 1).Row - 1
+    eind_rij = Range("begin_" & Left(Application.Caller, Len(Application.Caller) - 1) & Right(Application.Caller, 1) + 1).row - 1
     Else
-    eind_rij = Range("einde_calculatie").Row - 1
+    eind_rij = Range("einde_calculatie").row - 1
     End If
             If Evaluate("ISREF('" & worksheet_naam & "'!A1)") Then
 
@@ -61,7 +61,7 @@ Function GetWorksheetFromCodeName(CodeName As String) As String
     Dim WS As Worksheet
     For Each WS In ThisWorkbook.Worksheets
         If StrComp(WS.CodeName, CodeName, vbTextCompare) = 0 Then
-            GetWorksheetFromCodeName = WS.Name
+            GetWorksheetFromCodeName = WS.name
             Exit Function
         End If
     Next WS
@@ -71,7 +71,7 @@ Function GetCodenameFromWorksheet(Worksheet As String)
     Application.Volatile
     Dim Cdname
     For Each WS In ThisWorkbook.Worksheets
-        If StrComp(Worksheet, WS.Name, vbTextCompare) = 0 Then
+        If StrComp(Worksheet, WS.name, vbTextCompare) = 0 Then
             GetCodenameFromWorksheet = WS.CodeName
             Exit Function
         End If
@@ -81,6 +81,6 @@ End Function
 Sub testen_van_code(Optional variabele_zodat_de_macro_niet_zichtbaar_is As String)
     Dim WS As Worksheet
     Set WS = GetWorksheetFromCodeName("calculatie_1")
-    Debug.Print WS.Name
+    Debug.Print WS.name
 End Sub
 

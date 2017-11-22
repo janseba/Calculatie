@@ -42,7 +42,7 @@ Dim bladnaam
 
 Call DeletePopUpMenu
 
-bladnaam = GetCodenameFromWorksheet(sh.Name)
+bladnaam = GetCodenameFromWorksheet(sh.name)
 
 If (InStr(1, bladnaam, "calc", vbTextCompare) > 0 Or LCase(bladnaam) = "voorblad") And Range("menu").Value = True Then
 menus (False)

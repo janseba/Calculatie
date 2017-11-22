@@ -25,13 +25,13 @@ totaal = 0
 
 With ActiveSheet
 For Each lo In .ListObjects
-If .Cells(lo.Range.Row - 1, 19).Value <> 0 Then
+If .Cells(lo.Range.row - 1, 19).Value <> 0 Then
 
-With .Cells(lo.Range.Row - 1, 1)
+With .Cells(lo.Range.row - 1, 1)
 wp = IIf(.Value = "", "Onbekend", .Value)
 End With
-bedrag(wp) = bedrag(wp) + .Cells(lo.Range.Row - 1, 19).Value
-totaal = totaal + .Cells(lo.Range.Row - 1, 19).Value
+bedrag(wp) = bedrag(wp) + .Cells(lo.Range.row - 1, 19).Value
+totaal = totaal + .Cells(lo.Range.row - 1, 19).Value
 End If
 Next lo
 End With
@@ -43,7 +43,7 @@ On Error Resume Next
 Sheets("werkpost_grafiek").Delete
 On Error GoTo 0
 Set werkpost_grafiek = Sheets.Add
-werkpost_grafiek.Name = "werkpost_grafiek"
+werkpost_grafiek.name = "werkpost_grafiek"
 werkpost_grafiek.Visible = False
 Application.ScreenUpdating = True
 Application.DisplayAlerts = True
@@ -87,9 +87,9 @@ chartname = "Verdeling werkposten"
     Set grafiek = werkpost_grafiek.Shapes.AddChart(xlPie).Chart
     
 With grafiek
-.SeriesCollection(1).Name = "=" & werkpost_grafiek.Name & "!$A$1:$A$" & rij
-.SeriesCollection(1).Values = "=" & werkpost_grafiek.Name & "!$B$1:$B$" & rij
-.SeriesCollection(1).XValues = "=" & werkpost_grafiek.Name & "!$A$1:$A$" & rij
+.SeriesCollection(1).name = "=" & werkpost_grafiek.name & "!$A$1:$A$" & rij
+.SeriesCollection(1).Values = "=" & werkpost_grafiek.name & "!$B$1:$B$" & rij
+.SeriesCollection(1).XValues = "=" & werkpost_grafiek.name & "!$A$1:$A$" & rij
 .ChartTitle.text = "Verdeling werkposten"
 .ChartArea.Width = Overzicht_werkposten.lb_Werkpost_tellen.Width
 .ChartArea.Height = Overzicht_werkposten.lb_Werkpost_tellen.Height
@@ -114,7 +114,7 @@ Function IsUserFormLoaded(ByVal UFName As String) As Boolean
      
     IsUserFormLoaded = False
     For Each UForm In VBA.UserForms
-        If UForm.Name = UFName Then
+        If UForm.name = UFName Then
             IsUserFormLoaded = True
             Exit For
         End If
