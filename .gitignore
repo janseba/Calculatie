@@ -17,6 +17,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Windows Forms FRX files
+*.frx
+
 # =========================
 # Operating System Files
 # =========================
@@ -42,9 +45,3 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Excel frx files
-*.frx
-*.frx
-*.frx
-frmSubgroep.frx
-*.frx
